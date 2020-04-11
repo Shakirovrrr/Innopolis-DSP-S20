@@ -1,0 +1,6 @@
+# Visual Studio code files
+/.vscode
+
+# All sounds and data
+*.wav
+*.sod
