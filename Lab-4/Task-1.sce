@@ -3,6 +3,9 @@
 //
 // Author: Ruslan Shakirov, B17-SE-01
 
+// Load helpers for drafing graphs.
+exec("Helpers.sce", -1);
+
 function response = passBandAux(N, freqFrom, freqTo, Fs)
 	// Creates a left half of frequency response array.
 
@@ -56,11 +59,31 @@ load("signal_with_noise_and_filtered.sod");
 bands = stopBand(256, 1, 50, Fs);
 bands = bands .* stopBand(256, 8500, 15000, Fs);
 
+// Draw the frequency response for bands
+subplot(1, 1, 4);
+plotResponseFreq(bands, color('blue'));
+
+
 // Make the filter
 filter = makeFilter(bands);
 
+//
+subplot(1, 2, 4);
+plotResponseFreq(filter, color('blue'));
+
+// Draw the frequency response of the filter
+subplot(2, 1, 4);
+plotResponseSpectrum(filter, Fs, color('blue'));
+
+
 // Apply the filter
 result = conv(signal_with_noise, filter);
+
+// Draw spectrograms
+subplot(2, 2, 4);
+plotAudioSpectrum(signal_with_noise, Fs, color('blue'));
+plotAudioSpectrum(result, Fs, color('red'));
+legend("With noise", "Filtered");
 
 // Save the result
 savewave("result.wav", result, Fs);
