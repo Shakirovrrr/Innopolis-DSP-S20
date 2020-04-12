@@ -77,7 +77,7 @@ plotResponseSpectrum(filter, Fs, color('blue'));
 
 
 // Apply the filter
-result = conv(signal_with_noise, filter);
+result = convol(signal_with_noise, filter);
 
 // Draw spectrograms
 subplot(2, 2, 4);
