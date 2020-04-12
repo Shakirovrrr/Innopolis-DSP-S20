@@ -67,7 +67,7 @@ plotResponseFreq(bands, color('blue'));
 // Make the filter
 filter = makeFilter(bands);
 
-//
+// Draw the filter impulse response
 subplot(1, 2, 4);
 plotResponseFreq(filter, color('blue'));
 
