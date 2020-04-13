@@ -22,7 +22,9 @@ endfunction;
 function rirc = reverseIRC(irc)
 	// Make the reverse filter
 	ircf = fft(irc);
-	rircf = conj(ircf) ./ (abs(ircf) ^ 2);
+	// rircf = conj(ircf) ./ (abs(ircf) ^ 2);
+	rircf = 1 ./ ircf;
+	rircf(1, find(isinf(rircf))) = 0; // Eliminte infinities
 	rirc = ifft(rircf);
 
 	// Shift the filter
@@ -30,7 +32,7 @@ function rirc = reverseIRC(irc)
 	rirc = [rirc(floor(l/2)+1:l), rirc(1:floor(l/2))];
 
 	// Apply window to filter
-	rirc = rirc .* window('kr', l, 8);
+	rirc = rirc .* window('kr', l, 6);
 endfunction;
 
 function y = normalize(x)
@@ -62,3 +64,32 @@ kro = convol(irc, rirc);
 krof = fft(kro);
 amp = abs(krof);
 phase = phasemag(krof, 'c');
+
+
+plot(rirc);
+xlabel('Time, n');
+ylabel('Amplitude');
+title('$\tilde{h}$', 'fontsize', 3);
+xgrid(color('red'), 1, 7);
+
+scf();
+
+plot(kro);
+xlabel('Time, n');
+ylabel('Amplitude');
+title('$h\ast\tilde{h}$', 'fontsize', 3);
+xgrid(color('red'), 1, 7);
+
+scf();
+plot(amp);
+xlabel(['Spectrum component, ', '$k$']);
+ylabel('Freq amp');
+title(['$h\ast\tilde{h}$', 'amplitude spectrum'], 'fontsize', 3);
+xgrid(color('red'), 1, 7);
+
+scf();
+plot(phase);
+xlabel(['Spectrum component, ', '$k$']);
+ylabel('Freq phase');
+title(['$h\ast\tilde{h}$', 'phase spectrum'], 'fontsize', 3);
+xgrid(color('red'), 1, 7);
