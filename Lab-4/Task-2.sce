@@ -59,12 +59,13 @@ cleaned = normalize(cleaned);
 // Save echo-free audio
 saveAudio('cleaned', cleaned);
 
+// Compare with original IRC
 kro = convol(irc, rirc);
 krof = fft(kro);
 amp = abs(krof);
 phase = phasemag(krof, 'c');
 
-
+// Draw graphs
 plot(rirc);
 xlabel('Time, n');
 ylabel('Amplitude');
