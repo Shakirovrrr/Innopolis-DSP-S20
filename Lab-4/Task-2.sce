@@ -22,7 +22,6 @@ endfunction;
 function rirc = reverseIRC(irc)
 	// Make the reverse filter
 	ircf = fft(irc);
-	// rircf = conj(ircf) ./ (abs(ircf) ^ 2);
 	rircf = 1 ./ ircf;
 	rircf(1, find(isinf(rircf))) = 0; // Eliminte infinities
 	rirc = ifft(rircf);
