@@ -24,7 +24,7 @@ function rirc = reverseIRC(irc)
 	ircf = fft(irc);
 	rircf = 1 ./ ircf;
 	rircf(1, find(isinf(rircf))) = 0; // Eliminte infinities
-	rirc = ifft(rircf);
+	rirc = real(ifft(rircf));
 
 	// Shift the filter
 	l = length(rirc);
