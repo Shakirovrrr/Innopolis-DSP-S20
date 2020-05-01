@@ -1,4 +1,4 @@
-exec("Generate-Sine.sce", -1);
+exec("GenerateSine.sce", -1);
 
 function [] = plotAudioSpectrum(input, Fs, color)
 	l = length(input);
