@@ -2,22 +2,18 @@ function y = omega(n, k)
 	y = exp(-2 * %pi * %i * k / n);
 endfunction
 
-function xf=DFT(x, flag);
-	n=size(x,'*');
-	//Compute the n by n Fourier matrix
-	am=exp(-2*%pi*%i*(0:n-1)'*(0:n-1)/n);
-	xf=am*matrix(x,n,1);//dft
-	xf=matrix(xf,size(x));//reshape
-  endfunction
-
 function y = naiveDFT(x)
+	// Naive slow DFT algorithm
+
 	n = length(x);
 	am = omega(n, (0 : n-1)' * (0 : n-1));
 	y = am * matrix(x, n, 1);
 	y = matrix(y, size(x));
 endfunction
 
-function y = fasterDFT(x)
+function y = ctDFT(x)
+	// Implementation of the Cooley-Tukey FFT algorithm
+
 	n = length(x);
 
 	if (n <= 1) then
@@ -26,19 +22,31 @@ function y = fasterDFT(x)
 	end
 
 	if (modulo(n, 2) == 1) then
+		// CT-FFT works only with even-length signals
+		// so when the odd-length signal met,
+		// fall back to naive algorithm
 		y = naiveDFT(x);
 		return;
 	end
 
-	ixEvens = (1 : n/2) * 2;
-	ixOdds = ixEvens - 1;
-	evens = fasterDFT(x(ixEvens));
-	odds = fasterDFT(x(ixOdds));
+	odds = ctDFT(x(1:2:n));
+	evens = ctDFT(x(2:2:n));
 
 	y = zeros(1, n);
 	for i = 1 : n/2
-		omg = omega(n, i);
-		y(i) = odds(i) + omg * evens(i);
-		y(i + n/2) = odds(i) - omg * evens(i);
+		omg = omega(n, (i-1)) * evens(i);
+		y(i) = odds(i) + omg;
+		y(i + n/2) = odds(i) - omg;
 	end
 endfunction
+
+signal = rand(1, 2^16);
+
+sciRes = fft(signal);
+myRes = ctDFT(signal);
+
+difference = sciRes - myRes;
+implErr = sqrt(sum(difference .^ 2));
+
+printf("Error difference: %f\n", implErr);
+disp(implErr);
