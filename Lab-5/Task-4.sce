@@ -12,36 +12,39 @@ function [] = plotAudioSpectrum(input, Fs, color)
 endfunction
 
 Fs = 200;
-nSamples = 0.5 * Fs
+nSamples = 0.5 * Fs;
 
 x1 = sineSignal(nSamples, 0.5, 190, 0, Fs);
 x2 = cosineSignal(nSamples, 2, 10, 0, Fs);
 
-// samples = (1:nSamples);
-// plot2d(samples, x1, color('blue'));
-// plot2d(samples, x2, color('red'));
-// xlabel("Time, n", 'fontsize', 2);
-// ylabel("Amplitude", 'fontsize', 2);
-// title("Signals with Fs = 200", 'fontsize', 3);
+subplot(221);
+samples = (1:nSamples);
+plot2d(samples, x1, color('blue'));
+plot2d(samples, x2, color('red'));
+xlabel("Time, n", 'fontsize', 2);
+ylabel("Amplitude", 'fontsize', 2);
+title("Signals with Fs = 200", 'fontsize', 3);
 
-// plotAudioSpectrum(x1, Fs, color('blue'));
-// plotAudioSpectrum(x2, Fs, color('red'));
+subplot(222);
+plotAudioSpectrum(x1, Fs, color('blue'));
+plotAudioSpectrum(x2, Fs, color('red'));
+legend(['A = 0.5, f = 190 Hz', 'A = 2, f = 10 Hz']);
 
 
 Fs = 1000;
-nSamples = 0.5 * Fs
+nSamples = 0.5 * Fs;
 
 x1 = sineSignal(nSamples, 0.5, 190, 0, Fs);
 x2 = cosineSignal(nSamples, 2, 10, 0, Fs);
 
-// samples = (1:nSamples);
-// plot2d(samples, x1, color('blue'));
-// plot2d(samples, x2, color('red'));
-// xlabel("Time, n", 'fontsize', 2);
-// ylabel("Amplitude", 'fontsize', 2);
-// title("Signals with Fs = 1000", 'fontsize', 3);
+subplot(223);
+samples = (1:nSamples);
+plot2d(samples, x1, color('blue'));
+plot2d(samples, x2, color('red'));
+xlabel("Time, n", 'fontsize', 2);
+ylabel("Amplitude", 'fontsize', 2);
+title("Signals with Fs = 1000", 'fontsize', 3);
 
+subplot(224);
 plotAudioSpectrum(x1, Fs, color('blue'));
 plotAudioSpectrum(x2, Fs, color('red'));
-
-legend(['A = 0.5, f = 190 Hz', 'A = 2, f = 10 Hz']);
