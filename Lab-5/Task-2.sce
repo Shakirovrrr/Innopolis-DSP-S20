@@ -1,8 +1,8 @@
 exec("GenerateSine.sce", -1);
 
-F1 = 5;
-F2 = 10;
-F3 = 23.685;
+F1 = 6.296;
+F2 = 20;
+F3 = 33.685;
 
 // ---------------- Plot source signals ------------------
 Fs = 1000;
@@ -18,14 +18,14 @@ plot2d(xScale, x1, color('red'));
 plot2d(xScale, x2, color('limegreen'));
 plot2d(xScale, x3, color('blue'));
 plot2d(xScale, xsum, color('black'));
-legend(['5 Hz', '10 Hz', '23.685 Hz', 'Result']);
+legend(['6.296 Hz', '20 Hz', '33.685 Hz', 'Sum']);
 
 g=gca();
 g.title.text='Source signals';
-g.title.font_size = 3;
+g.title.font_size = 2;
 g.x_label.text='Time, n';
 g.y_label.text='Amplitude';
-g.children(2).children.line_style=2;
+g.children(2).children.line_style=3;
 g.children(2).children.thickness=2;
 
 // ---------------- Plot sampled sum ------------------
@@ -43,7 +43,7 @@ scatter(xScale, xsum);
 
 g=gca();
 g.title.text='Sampled result';
-g.title.font_size = 3;
+g.title.font_size = 2;
 g.x_label.text='Time, n';
 g.y_label.text='Amplitude';
 
@@ -64,6 +64,6 @@ scatter(xScale, magFreq);
 
 g=gca();
 g.title.text='Signal in frequency domain';
-g.title.font_size = 3;
+g.title.font_size = 2;
 g.x_label.text='Frequency, Hz';
 g.y_label.text='Freq amplitude';
